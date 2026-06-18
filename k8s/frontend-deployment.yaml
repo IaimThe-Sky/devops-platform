@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: trippr-ui
+
+spec:
+  replicas: 1
+
+  selector:
+    matchLabels:
+      app: trippr-ui
+
+  template:
+
+    metadata:
+      labels:
+        app: trippr-ui
+
+    spec:
+
+      containers:
+
+      - name: trippr-ui
+
+        image: iamtheksy/trippr-ui:18
+
+        ports:
+        - containerPort: 80

@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: trippr-app
+
+spec:
+  replicas: 1
+
+  selector:
+    matchLabels:
+      app: trippr-app
+
+  template:
+
+    metadata:
+      labels:
+        app: trippr-app
+
+    spec:
+
+      containers:
+
+      - name: trippr-app
+
+        image: iamtheksy/trippr-app:18
+
+        ports:
+        - containerPort: 8000
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "128Mi"
+
+          limits:
+            cpu: "500m"
+            memory: "512Mi"
+        envFrom:
+        - secretRef:
+            name: trippr-secrets

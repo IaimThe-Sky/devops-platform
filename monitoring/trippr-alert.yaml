@@ -1,0 +1,30 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+
+metadata:
+  name: trippr-alerts
+  namespace: monitoring
+
+  labels:
+    release: monitoring
+
+spec:
+
+  groups:
+    - name: trippr.rules
+
+      rules:
+
+        - alert: HighErrorRate
+
+          expr: |
+            sum(rate(http_requests_total{status=~"5.."}[1m])) > 0
+
+          for: 1m
+
+          labels:
+            severity: warning
+
+          annotations:
+            summary: "Trippr backend is returning 5xx errors"
+            description: "Error rate detected in FastAPI backend"

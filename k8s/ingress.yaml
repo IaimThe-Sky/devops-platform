@@ -1,0 +1,36 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+
+metadata:
+  name: trippr-ingress
+
+spec:
+
+  ingressClassName: nginx
+
+  rules:
+  - host: trippr.local
+
+    http:
+
+      paths:
+
+      - path: /
+        pathType: Prefix
+
+        backend:
+          service:
+            name: trippr-ui-service
+
+            port:
+              number: 80
+
+      - path: /api
+        pathType: Prefix
+
+        backend:
+          service:
+            name: trippr-app-service
+
+            port:
+              number: 8000
